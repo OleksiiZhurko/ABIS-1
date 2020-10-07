@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Laptoper</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/index.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand h1" href="/">Laptoper</a>
+
+        <select class="custom-select ml-auto w-25" id="purpose">
+            <option value="?purpose=1">Усі</option>
+            <option value="?purpose=2">Для дому</option>
+            <option value="?purpose=3">Для роботи</option>
+            <option value="?purpose=4">Повсякденний</option>
+        </select>
+    </nav>
+
+    <div id="content" class="container my-3">
+        <p class="warning" th:if="${laptops.isEmpty()}">Вибачте, нічого не знайдено</p>
+        <div class="row" th:unless="${laptops.isEmpty()}">
+            <div class="col-md-3" th:each="laptop : ${laptops}">
+                <div class="card my-3 text-center">
+                    <img class="mx-auto d-block" alt="laptop" height="210px" src="" th:src="${laptop.imgUrl}"
+                         width="200px">
+                    <h6 class="name px-1" th:text="${laptop.name}"></h6>
+                    <ul class="list-group list-group-flush spec">
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item" th:text="${laptop.characteristics.os}"></li>
+                        <li class="list-group-item" th:text="${laptop.characteristics.processorInfo + laptop.characteristics.processorSpeed + ' ГГц'}"></li>
+                        <li class="list-group-item" th:text="${laptop.characteristics.videoMemory}"></li>
+                        <li class="list-group-item" th:text="${laptop.characteristics.sizeDisplay + laptop.characteristics.displayInfo}"></li>
+                        <li class="list-group-item" th:text="${laptop.characteristics.sizeRAM + ' Гб' + laptop.characteristics.RAM}"></li>
+                        <li class="list-group-item" th:text="${laptop.characteristics.sizeROM + ' Гб' + laptop.characteristics.ROM}"></li>
+                        <li class="list-group-item price" th:text="${laptop.price} + '$'"></li>
+                    </ul>
+                    <button class="btn btn-dark my-2 mx-5" th:attr="onclick='location.href=\'' + ${laptop.urlTo} + '\''"
+                            type="submit">
+                        Детальніше
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/index.js}"></script>
+
+    </body>
+</html>

@@ -1,0 +1,17 @@
+.card {
+    transition: all 500ms ease-out;
+}
+
+.card:hover {
+    cursor: pointer;
+    transition: 500ms;
+    box-shadow: 0 0 7px 7px rgba(100, 100, 100, 1);
+}
+
+.spec {
+    font-size: 85%;
+}
+
+.price {
+    font-size: 130%;
+}
