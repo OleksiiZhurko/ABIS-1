@@ -2,6 +2,7 @@ package com.expert.laptops.dto;
 
 import lombok.*;
 
+import java.util.Collection;
 import java.util.stream.DoubleStream;
 
 @Getter

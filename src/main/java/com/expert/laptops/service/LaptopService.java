@@ -21,13 +21,13 @@ public abstract class LaptopService {
         return database.getLaptops();
     }
 
-    public List<Laptop> sortBetter(List<Laptop> laptops, final Integer[] coeffs) {
+    public List<Laptop> sortBetter(List<Laptop> laptops, final Integer[] keys) {
 
         if (laptops.isEmpty()) {
             return laptops;
         }
 
-        return getSortedLaptops(laptops, weights[coeffs[0]], weights[coeffs[1]], weights[coeffs[2]], weights[coeffs[3]]);
+        return getSortedLaptops(laptops, weights[keys[0]], weights[keys[1]], weights[keys[2]], weights[keys[3]]);
     }
 
     public List<Laptop> sortBetter(List<Laptop> laptops) {
@@ -39,7 +39,7 @@ public abstract class LaptopService {
         return getSortedLaptops(laptops, weights[0], weights[1], weights[2], weights[3]);
     }
 
-    private List<Laptop> getSortedLaptops(List<Laptop> laptops, int coefRam, int coefProc, int coefRom, int coefPrice) {
+    private List<Laptop> getSortedLaptops(List<Laptop> laptops, int kRam, int kProc, int kRom, int kPrice) {
         Laptop notebook = laptops.stream()
                 .max(Comparator.comparing(laptop ->
                         laptop.getCharacteristics().getProcessorSpeed() * laptop.getCharacteristics().getProcessorCore()))
@@ -65,16 +65,16 @@ public abstract class LaptopService {
         return laptops.stream()
                 .sorted((laptop1, laptop2) -> {
                     int compare = Double.compare(
-                            (laptop1.getCharacteristics().getSizeRAM() * coefRam / maxRam +
+                            (laptop1.getCharacteristics().getSizeRAM() * kRam / maxRam +
                                     laptop1.getCharacteristics().getProcessorSpeed() *
-                                            laptop1.getCharacteristics().getProcessorCore() * coefProc / maxProcessor +
-                                    laptop1.getCharacteristics().getSizeROM() * coefRom / maxRom -
-                                    laptop1.getPrice() * coefPrice / maxPrice),
-                            (laptop2.getCharacteristics().getSizeRAM() * coefRam / maxRam +
+                                            laptop1.getCharacteristics().getProcessorCore() * kProc / maxProcessor +
+                                    laptop1.getCharacteristics().getSizeROM() * kRom / maxRom -
+                                    laptop1.getPrice() * kPrice / maxPrice),
+                            (laptop2.getCharacteristics().getSizeRAM() * kRam / maxRam +
                                     laptop2.getCharacteristics().getProcessorSpeed() *
-                                            laptop2.getCharacteristics().getProcessorCore() * coefProc / maxProcessor +
-                                    laptop2.getCharacteristics().getSizeROM() * coefRom / maxRom -
-                                    laptop2.getPrice() * coefPrice / maxPrice)
+                                            laptop2.getCharacteristics().getProcessorCore() * kProc / maxProcessor +
+                                    laptop2.getCharacteristics().getSizeROM() * kRom / maxRom -
+                                    laptop2.getPrice() * kPrice / maxPrice)
                     );
 
                     if (compare == 0) {
