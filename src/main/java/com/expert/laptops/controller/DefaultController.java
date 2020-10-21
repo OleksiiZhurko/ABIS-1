@@ -40,13 +40,24 @@ public class DefaultController {
         return "index";
     }
 
-    @GetMapping(value = "", params = "purpose")
+    @GetMapping(value = "", params = {"purpose"})
     public @ResponseBody List<Laptop> produceMainPageWithParam(@RequestParam final Integer purpose) {
         return switch (purpose) {
             case 2 -> lpHome.sortBetter(lpHome.makeMatching());
             case 3 -> lpWork.sortBetter(lpWork.makeMatching());
             case 4 -> lpEveryday.sortBetter(lpEveryday.makeMatching());
-            default -> lpHome.findAll();
+            default -> lpHome.sortBetter(lpEveryday.findAll());
+        };
+    }
+
+    @GetMapping(value = "", params = {"purpose", "params"})
+    public @ResponseBody List<Laptop> produceMainPageWithParam(@RequestParam final Integer purpose,
+                                                               @RequestParam final Integer[] params) {
+        return switch (purpose) {
+            case 2 -> lpHome.sortBetter(lpHome.makeMatching(), params);
+            case 3 -> lpWork.sortBetter(lpWork.makeMatching(), params);
+            case 4 -> lpEveryday.sortBetter(lpEveryday.makeMatching(), params);
+            default -> lpHome.sortBetter(lpEveryday.findAll(), params);
         };
     }
 
